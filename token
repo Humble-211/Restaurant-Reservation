@@ -1,0 +1,10 @@
+{
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+
+{
+    "date": "2024-10-10",
+    "time": "19:00",
+    "size": 4
+}
