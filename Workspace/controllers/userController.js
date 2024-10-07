@@ -1,8 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
-
 const Reservation = require('../models/Reservation')
 
 // USER AUTH
@@ -115,6 +113,27 @@ const makeRes = async(req,res) => {
         res.status(500).send('Server error')
     }
 }
+
+// WIP cancel Reservation
+
+//TODO: this is only working for 1 reservation only
+// if customer has more than 1 it will delete the first one
+// neeed to figure something out
+const cancelRes = async (req,res) => {
+    try {
+        const userid = req.user
+        const count = await Reservation.countDocuments({userid})
+        if (count === 0)
+            return res.status(404).json({msg: 'this user has no reservation'})
+        await Reservation.deleteOne({userId : userid})
+        return res.status(201).json({msg: 'Reservation cancelled'})
+
+
+    } catch (err) {
+        console.log('cancelRes function')
+        console.log(err)
+    }
+}
 /*
 exports.getAllRes = async(req,res) => {}
 
@@ -125,4 +144,4 @@ exports.cancelRes = async(req,res) => {}
 
     */
 
-module.exports = {registerUser,loginUser, makeRes}
+module.exports = {registerUser,loginUser, makeRes, cancelRes}

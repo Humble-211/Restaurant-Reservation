@@ -11,7 +11,7 @@ app.use(express.json())
 // apis
 app.use(express.static('public'))
 
-app.use('/api/users', require('./routes/userRoutes'))
+app.use('/users', require('./routes/userRoutes'))
 
 
 
