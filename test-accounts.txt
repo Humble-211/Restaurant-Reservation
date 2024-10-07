@@ -1,0 +1,21 @@
+{
+  "email": "john@example.com",
+  "password": "securePassword123"
+}
+
+{
+    "email": "jasd@example.com",
+    "password": "abcxyz213"
+}
+
+{
+    "email": "jaasdasd12345@yahoo.com",
+    "password": "abcxyz213"
+}
+
+{
+    "date": "2024-10-10",
+    "time": "19:00",
+    "size": 4
+}
+
