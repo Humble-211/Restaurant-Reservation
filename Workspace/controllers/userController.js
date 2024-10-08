@@ -140,8 +140,6 @@ exports.getAllRes = async(req,res) => {}
 
 exports.modifyRes = async(req,res) => {}
 
-exports.cancelRes = async(req,res) => {}
-
     */
 
 module.exports = {registerUser,loginUser, makeRes, cancelRes}
