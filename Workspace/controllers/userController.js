@@ -42,9 +42,6 @@ const registerUser = async (req,res) => {
 
 //log in (exist user), return a jwt token
 const loginUser = async (req,res) => {
-    console.log(req.body)
-    console.log(req.body.email)
-    console.log(req.body.password)
     const {email, password} = req.body 
     try {
         //check if user exist
@@ -52,19 +49,19 @@ const loginUser = async (req,res) => {
 
         console.log(email)
         if (!user) {
-            return res.status(400).json({msg: 'Invalid credentials'})
+            return res.status(400).json({msg: 'Invalid email'})
         }
 
         //compare pw vs hashed pw in database
         const isMatch = await bcrypt.compare(password, user.password)
         if (!isMatch) {
-            return res.status(400).json({msg: 'invalid credentials'})
+            return res.status(400).json({msg: 'Invalid password'})
         }
         else {
             //res.json({msg: 'logged in successfully, returning jwt'})
             const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, { expiresIn: '1h'})
 
-            res.json({message: 'Login succesful', email: email, token: token})
+            res.json({message: 'Login succesful', email: email})
             console.log(`logged in successfully as email: ${email}`)
 
         } 

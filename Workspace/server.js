@@ -5,14 +5,13 @@ const userRoutes = require('./routes/userRoutes')
 require('dotenv').config()
 
 const app = express()
-
+const port = 9191
 
 connectDB();
 
-//app.use(express.json())
-app.use(bodyParser.urlencoded({extended:true}))
-app.use(bodyParser.json())
-
+// Middleware to parse the body of POST requests
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // serve static files
 app.use(express.static('public'))
@@ -23,7 +22,7 @@ app.use('/users', userRoutes)
 
 
 // set up server
-const port = 9191
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
 })
