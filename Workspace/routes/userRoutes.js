@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const { registerUser, loginUser, makeRes, cancelRes } = require('../controllers/userController.js')
 const authMiddleware = require('../middleware/jwt.js')
+
 //user auth
 router.post('/register', registerUser)
 

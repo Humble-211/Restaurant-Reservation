@@ -2,6 +2,7 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const Reservation = require('../models/Reservation')
+//const bodyParser = require('body-parser')
 
 // USER AUTH
 //register new user
@@ -41,12 +42,15 @@ const registerUser = async (req,res) => {
 
 //log in (exist user), return a jwt token
 const loginUser = async (req,res) => {
-    const {email, password} = req.body
-
+    console.log(req.body)
+    console.log(req.body.email)
+    console.log(req.body.password)
+    const {email, password} = req.body 
     try {
         //check if user exist
         const user=await User.findOne({email})
 
+        console.log(email)
         if (!user) {
             return res.status(400).json({msg: 'Invalid credentials'})
         }
@@ -60,7 +64,8 @@ const loginUser = async (req,res) => {
             //res.json({msg: 'logged in successfully, returning jwt'})
             const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, { expiresIn: '1h'})
 
-            res.json({msg: `token is: ${token}`})
+            res.json({message: 'Login succesful', email: email, token: token})
+            console.log(`logged in successfully as email: ${email}`)
 
         } 
     } catch (err) {
