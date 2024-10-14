@@ -21,7 +21,7 @@
     <main>
         <div class="container">
             <h2>Create Your Account</h2>
-            <form id="signup-form">
+            <form id="signup-form" action="/users/register" method="POST">
                 <div class="form-group">
                     <label for="name">Full Name:</label>
                     <input type="text" id="name" name="name" required>
@@ -43,6 +43,24 @@
         <p>&copy; 2024 Restaurant Name. All rights reserved.</p>
     </footer>
 
-    <script src="script.js"></script> <!-- Link to your JavaScript file -->
+    <script src="script.js">
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target
+            console.log(form)
+            const formData = new FormData(form)
+            
+            fetch(form.action, {
+                method: form.method,
+                body: new URLSearchParams(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText=JSON.stringify(data)
+            }).catch(error => {
+                console.error('Error:', error)
+            })
+        })
+    </script> <!-- Link to your JavaScript file -->
 </body>
 </html>

@@ -61,9 +61,8 @@ const loginUser = async (req,res) => {
             //res.json({msg: 'logged in successfully, returning jwt'})
             const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, { expiresIn: '1h'})
 
-            res.json({message: 'Login succesful', email: email})
+            res.json({message: 'Login succesful', email: email, token: token})
             console.log(`logged in successfully as email: ${email}`)
-
         } 
     } catch (err) {
         console.error(err.message)
@@ -73,6 +72,18 @@ const loginUser = async (req,res) => {
 }
 
 // MANAGE RESERVATIONS
+
+const getRes = async(req,res) => {
+    try {
+        const userId = req.user
+        console.log(`im here with ${userId}`)
+        const reservation = await Reservation.find({userId})
+        res.json(reservation)
+    } catch (error) {
+        console.error('Error in getRes function userController.js')
+        res.status(500).send('Server error')    
+    }
+}
 
 const makeRes = async(req,res) => {
     try {
@@ -144,4 +155,4 @@ exports.modifyRes = async(req,res) => {}
 
     */
 
-module.exports = {registerUser,loginUser, makeRes, cancelRes}
+module.exports = {registerUser,loginUser, getRes, makeRes, cancelRes}
