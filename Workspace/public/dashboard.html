@@ -86,9 +86,6 @@
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
                 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                
                 <label for="phone">Phone:</label>
                 <input type="tel" id="phone" name="phone" required>
                 
@@ -110,7 +107,6 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Email</th>
                         <th>Phone</th>
                         <th>Date</th>
                         <th>Time</th>
@@ -149,13 +145,12 @@
                     const row = document.createElement('tr')
                     row.innerHTML = `
                         <td>${reservation.name}</td>
-                        <td>${reservation.email}</td>
                         <td>${reservation.phone}</td>
                         <td>${reservation.date}</td>
                         <td>${reservation.time}</td>
                         <td>${reservation.size}</td>
                         <td>
-                            <button onclick ="cancelReservation('${reservation._id}')">Cancel</button>
+                            <button onclick ="cancelRes('${reservation._id}')">Cancel</button>
                         </td> 
                     `
                     tbody.appendChild(row)
@@ -165,9 +160,10 @@
             }
         })
 
-        async function cancelReservation(id) {
+        async function cancelRes(id) {
             try {
-                const response = await fetch(`/users/reservations/${id}`, {
+                console.log(`id is: ${id}`)
+                const response = await fetch(`users/reservation/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
@@ -180,9 +176,9 @@
                 }
 
                 // Remove the row from the table
-                document.querySelector(`button[onclick="cancelReservation('${id}')"]`).closest('tr').remove();
+                document.querySelector(`button[onclick="cancelRes('${id}')"]`).closest('tr').remove();
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error (catch error):', error);
             }
         }
     </script>

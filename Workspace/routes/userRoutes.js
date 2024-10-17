@@ -11,7 +11,7 @@ router.post('/login', loginUser)
 //if authMiddleware (jwt token) exist then we can make reservation
 router.get('/reservation', authMiddleware, getRes)
 router.post('/reservation/create', authMiddleware, makeRes)
-router.post('/reservation/cancel', authMiddleware, cancelRes)
+router.delete('/reservation/:id', authMiddleware, cancelRes)
 /*
 //reservation manage
 router.get('/api/reservation', getAllRes) //admin only

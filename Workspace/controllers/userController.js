@@ -91,7 +91,7 @@ const makeRes = async(req,res) => {
         const userId = req.user
         //find name = userId
         const currentUser = await User.findById(userId)
-        const {date, time, size} = req.body
+        const {phone, date, time, size} = req.body
 
         //make sure date time size are valid
         if (!date || !time || !size) 
@@ -104,6 +104,7 @@ const makeRes = async(req,res) => {
         const reservation = new Reservation({
             name: currentUser.name,
             userId,
+            phone,
             date,
             time,
             size
@@ -127,32 +128,22 @@ const makeRes = async(req,res) => {
     }
 }
 
-// WIP cancel Reservation
 
-//TODO: this is only working for 1 reservation only
-// if customer has more than 1 it will delete the first one
-// neeed to figure something out
-const cancelRes = async (req,res) => {
+//bug: any logged in users can cancel any reservation as long as they know params.id
+const cancelRes= async (req, res) => {
     try {
-        const userid = req.user
-        const count = await Reservation.countDocuments({userid})
-        if (count === 0)
-            return res.status(404).json({msg: 'this user has no reservation'})
-        await Reservation.deleteOne({userId : userid})
-        return res.status(201).json({msg: 'Reservation cancelled'})
-
-
+        await Reservation.findByIdAndDelete(req.params.id)
+        return res.status(200).json({msg: 'Reservation cancelled'})
     } catch (err) {
-        console.log('cancelRes function')
-        console.log(err)
+        console.log('cancelRes function, line 130 userController.js')
     }
 }
+
 /*
-exports.getAllRes = async(req,res) => {}
 
 
 exports.modifyRes = async(req,res) => {}
 
-    */
+*/
 
 module.exports = {registerUser,loginUser, getRes, makeRes, cancelRes}
