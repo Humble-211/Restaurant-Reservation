@@ -89,10 +89,14 @@ const makeRes = async(req,res) => {
     try {
         // get authed userId from req.user
         const userId = req.user
+        console.log(userId)
         //find name = userId
-        const currentUser = await User.findById(userId)
-        const {phone, date, time, size} = req.body
-
+        // const currentUser = await User.findById(userId)
+        const {name, phone, date, time, size} = req.body
+        console.log(name)
+        console.log(date)
+        console.log(time)
+        console.log(size)
         //make sure date time size are valid
         if (!date || !time || !size) 
             return res.status(400).json({msg:'missing info'})
@@ -102,9 +106,8 @@ const makeRes = async(req,res) => {
 
         // put them all to an object
         const reservation = new Reservation({
-            name: currentUser.name,
+            name: name,
             userId,
-            phone,
             date,
             time,
             size
